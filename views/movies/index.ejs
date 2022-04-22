@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+     <header class="jumbotron">
+         <div class="container">
+             <h1><span class="glyphicon glyphicon-tent"></span> Welcome To The Movie World!</h1>
+             <p>View our hand-picked movies from all over the world</p>
+             
+         </div>
+     </header>
+     
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% movies.forEach(function(movie){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                   <img src="<%= movie.poster_path %>">
+                   <div class="caption">
+                       <h4><%= movie.title %></h4>
+                   </div>
+                   <p>
+                       <a href="/movies/<%= movie._id %>" class="btn btn-primary">More Info</a>
+                   </p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+    <%- include('../partials/footer') %>

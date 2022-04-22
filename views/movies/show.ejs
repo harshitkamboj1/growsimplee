@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= movie.poster_path %>">
+                <div class="caption-full">
+                    <h4 class="pull-right">Rating: <%= movie.ratings?movie.ratings:"N/A" %></h4>
+                    <h4><a><%=movie.title%></a></h4>
+                    <p><%= movie.overview %></p>
+                    <p>
+                        <em>Original Title: <%= movie.original_title %></em> <br>
+                        <em>Original Language: <%= movie.original_language %></em> <br>
+                        <em>Release Date: <%= movie.release_date %></em> <br>
+                        <em>Adult: <%= movie.adult %></em> <br>
+                    </p>
+                </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/movies/<%= movie._id %>/ratings/new">Add New Rating</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
