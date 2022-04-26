@@ -10,7 +10,8 @@ var movieSchema = mongoose.Schema({
     vote_average: Number, 
     vote_count: Number,
     poster_path: String,
-    ratings: Number
+    ratings: Number,
+    usernumber: Number
 });
 
 module.exports = mongoose.model("Movie", movieSchema);
