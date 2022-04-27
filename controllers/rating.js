@@ -23,7 +23,7 @@ var createRating = function(req, res){
             console.log(err);
             res.redirect("/movies");
         } else {
-         Rating.create(req.body.rating, function(err, rating){
+         Rating.create(req.body.rating, async function(err, rating){
             if(err){
                 console.log(err);
             } else {
@@ -33,9 +33,9 @@ var createRating = function(req, res){
                 rating.user.username = req.user.username;
                 rating.movie.id = req.params.id;
                 rating.movie.title = movie.title 
-                ratings = 0
+                var ratings = 0
                 if (movie.ratings) {
-                   ratings = movie.ratings * movie.usernumber + int(req.body.rating.text);
+                   ratings = movie.ratings * movie.usernumber + parseInt(req.body.rating.text);
                    ratings = ratings/(movie.usernumber + 1);
                    movie.ratings = ratings;
                    if (movie.usernumber) {
@@ -45,13 +45,19 @@ var createRating = function(req, res){
                    }
                 }
                 else {
-                    ratings = int(req.body.rating.text);
+                    ratings = parseInt(req.body.rating.text);
                     movie.ratings = ratings;
                     movie.usernumber = 1;
                 }
                 //save rating
-                rating.save();
-                Movie.findByIdAndUpdate(req.params.id, movie)
+                await rating.save();
+                await movie.save();
+                // await Movie.findByIdAndUpdate(req.params.id, movie, function(err, movie){
+		        //     if(err){
+			    //         console.log(err);
+		        //     }
+		        //     console.log("movie", movie);
+		        // });
                 console.log(rating);
                 req.flash('success', 'Created a rating!');
                 res.redirect('/movies/' + movie._id);
