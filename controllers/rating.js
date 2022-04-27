@@ -38,7 +38,11 @@ var createRating = function(req, res){
                    ratings = movie.ratings * movie.usernumber + int(req.body.rating.text);
                    ratings = ratings/(movie.usernumber + 1);
                    movie.ratings = ratings;
-                   movie.usernumber = movie.usernumber + 1;
+                   if (movie.usernumber) {
+                       movie.usernumber = movie.usernumber + 1;
+                   } else {
+                       movie.usernumber = 2;
+                   }
                 }
                 else {
                     ratings = int(req.body.rating.text);
@@ -47,7 +51,7 @@ var createRating = function(req, res){
                 }
                 //save rating
                 rating.save();
-                movie.save();
+                Movie.findByIdAndUpdate(req.params.id, movie)
                 console.log(rating);
                 req.flash('success', 'Created a rating!');
                 res.redirect('/movies/' + movie._id);
